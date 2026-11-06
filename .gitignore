@@ -2,3 +2,4 @@ parent
 child1
 child2 
 build/
+.DS_Store

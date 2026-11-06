@@ -9,13 +9,13 @@
 static int hold_sec = 0;
 typedef struct {
     int *a;
-    size_t n;          // степень двойки
+    size_t n;          
     int tid, nthreads;
     pthread_barrier_t *bar;
 } ctx_t;
 static void *worker(void *arg) {
     ctx_t *c = arg;
-    if (hold_sec > 0) sleep(hold_sec);   
+    if (hold_sec > 0) sleep(hold_sec);  
     int *a = c->a;
     size_t n = c->n;
     size_t chunk = n / c->nthreads;
@@ -32,7 +32,8 @@ static void *worker(void *arg) {
                     }
                 }
             }
-            (c->bar);
+            // все пары этапа должны завершиться до следующего этапа
+            pthread_barrier_wait(c->bar);
         }
     }
     return NULL;
